@@ -23,26 +23,33 @@ export class ProductService {
       )
      }
   list(){
-    return this.http.get<Product[]>( this.API).pipe(first(),delay(2000),
-    tap(product => console.log(product)))
+    return this.http.get<Product[]>( this.API).pipe(
+      map(obj => obj), catchError(e => this.errorHandler(e))
+    )
   }
   /*ja feito no backend talves esses metodos sejam */
   readById(id: any): Observable<Product> {
     const url = `${this.API}/${id}`
-return this.http.get<Product>(url)
+return this.http.get<Product>(url).pipe(
+  map(obj => obj), catchError(e => this.errorHandler(e))
+)
   }
   update(product: Product): Observable<Product>{
     const url = `${this.API}/${product.id}`
-return this.http.put<Product>(url, product)
+return this.http.put<Product>(url, product).pipe(
+  map(obj => obj), catchError(e => this.errorHandler(e))
+)
 
   }
   delete(id: any): Observable<Product>{
     const url = `${this.API}/${id}`
-    return this.http.delete<Product>(url)
+    return this.http.delete<Product>(url).pipe(
+      map(obj => obj), catchError(e => this.errorHandler(e))
+    )
 
   }
   errorHandler(e: any): Observable<any>{
-    this.showMessage('Erro ao carregar o backend')
+    this.showMessage('Erro ao carregar o backend',true)
     return EMPTY
 
   }
