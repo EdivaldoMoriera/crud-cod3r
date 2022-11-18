@@ -1,3 +1,4 @@
+import { HeaderService } from './../../components/template/header/header.service';
 import { ProductService } from './../../product/product.service';
 import { Product } from './../../components/product/product.model';
 import { Component, Input, OnInit } from '@angular/core';
@@ -14,11 +15,18 @@ export class ProductCrudComponent implements OnInit {
 
   displayedColumns = ['id', 'name', 'price', 'action'];
 
-  constructor(private router: Router, private service: ProductService) {
+  constructor(private router: Router, private service: ProductService, private headerService: HeaderService) {
     this.product = this.service.list();
     this.service.list().subscribe((product) => {
       console.log(product);
+
+      headerService.headerData = {
+        title: 'Novo Produto',
+        icon: 'storefront',
+        routerUrl: '/products'
+      }
     });
+
   }
 
   ngOnInit(): void {}

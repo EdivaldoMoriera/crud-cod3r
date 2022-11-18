@@ -14,7 +14,7 @@ export class ProductService {
   constructor(private snackar: MatSnackBar, private http: HttpClient) { }
   showMessage(msg: string, isError: boolean = false) : void{
     this.snackar.open(msg, 'X',{
-      duration: 3000, horizontalPosition:"right", verticalPosition:"top",
+      duration: 2000, horizontalPosition:"right", verticalPosition:"top",
       panelClass:isError ? ['msg-error'] : ['msg-sucess']
     })}
     create(product: Product): Observable<Product>{
@@ -27,7 +27,10 @@ export class ProductService {
       map(obj => obj), catchError(e => this.errorHandler(e))
     )
   }
-  /*ja feito no backend talves esses metodos sejam */
+  /*ja feito no backend talves esses metodos sejam
+    return this.http.get<Product[]>( this.API).pipe(first(),delay(2000),
+    tap(product => console.log(product)))
+  */
   readById(id: any): Observable<Product> {
     const url = `${this.API}/${id}`
 return this.http.get<Product>(url).pipe(
@@ -46,7 +49,6 @@ return this.http.put<Product>(url, product).pipe(
     return this.http.delete<Product>(url).pipe(
       map(obj => obj), catchError(e => this.errorHandler(e))
     )
-
   }
   errorHandler(e: any): Observable<any>{
     this.showMessage('Erro ao carregar o backend',true)

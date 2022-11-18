@@ -49,7 +49,7 @@ public class ProductRest {
   public ResponseEntity<Product> update(@PathVariable Integer id, @RequestBody Product product) {
     product = productService.update(id, product);
     return ResponseEntity.ok().body(product);
-
+ 
   }
 
   @DeleteMapping(value = "/{id}")
